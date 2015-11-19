@@ -16,6 +16,8 @@ module Tolk
 
       # exclude locales tokens from gems
       attr_accessor :exclude_gems_token
+      # specify locale files loading path
+      attr_accessor :load_path
 
       # reject files of type xxx.en.yml when syncing locales
       attr_accessor :block_xxx_en_yml_locale_files
@@ -26,6 +28,9 @@ module Tolk
         @block_xxx_en_yml_locale_files = true # keep compat with older versions
 
         @dump_path = Proc.new { "#{Rails.application.root}/config/locales" }
+
+        @load_path = Proc.new{ "#{Rails.application.root}/config/locales/*.{rb,yml}"}
+        # Dir[Rails.root.join('config', 'locales', "*.{rb,yml}")]
 
         @mapping = {
           'ar'    => 'Arabic',

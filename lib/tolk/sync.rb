@@ -9,12 +9,17 @@ module Tolk
         sync_phrases(load_translations)
       end
 
+      def load_path
+        Tolk.config.load_path.is_a?(Proc) ? instance_eval(&Tolk.config.load_path) : "#{Rails.application.root}#{Tolk.config.load_path}"
+      end
+
       def load_translations
         if Tolk.config.exclude_gems_token
           # bypass default init_translations
           I18n.backend.reload! if I18n.backend.initialized?
           I18n.backend.instance_variable_set(:@initialized, true)
-          translations_files = Dir[Rails.root.join('config', 'locales', "*.{rb,yml}")]
+          translations_files = Dir["#{load_path}/*.{rb,yml}"]
+
 
           if Tolk.config.block_xxx_en_yml_locale_files
             locale_block_filter = Proc.new {

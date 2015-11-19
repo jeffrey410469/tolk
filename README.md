@@ -94,6 +94,10 @@ Tolk.config do |config|
   config.block_xxx_en_yml_locale_files = true
   # reject files of type xxx.en.yml when syncing locales.
 
+  config.load_path = '/new/path'
+  # Simply make tolk to handle limited files since "block_xxx_en_yml_locale_files" is not working. 
+  # by default the locales folder (config/locales).
+
   config.dump_path = '/new/path'
   # Dump locale path by default the locales folder (config/locales).
 
